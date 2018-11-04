@@ -21,14 +21,16 @@ export class AppComponent {
 
   start() {
     if (this.started) {
+      if (this.timer){
+        clearTimeout(this.timer);
+      }
       this.started = false;
       this.fr.pause();
-        this.audio.pause();
-      this.fr.pause();
+      this.audio.pause();
     }
     else {
       this.started = true;
-      this.fr.pause();
+      console.log('unpause');
       this.fr.start();
       this.timer = setTimeout( () => {
         this.started = false;
@@ -37,29 +39,9 @@ export class AppComponent {
         this.audio.currentTime = 0.0;
       }, (this.fr.frames.length - this.fr.f) * this.fr.deltaSpeed / this.fr.speed)
 
-
-      switch (this.fr.speed) {
-        case 1:
-          this.audio.src = '../assets/audio/perelive_1.mp3'; // Указываем путь к звуку "клика"
-          break;
-        case 2:
-          this.audio.src = '../assets/audio/perelive_2.mp3'; // Указываем путь к звуку "клика"
-          break;
-        case 3:
-          this.audio.src = '../assets/audio/perelive_3.mp3'; // Указываем путь к звуку "клика"
-          break;
-        case 4:
-          this.audio.src = '../assets/audio/perelive_4.mp3'; // Указываем путь к звуку "клика"
-          break;
-        case 5:
-          this.audio.src = '../assets/audio/perelive_5.mp3'; // Указываем путь к звуку "клика"
-          break;
-        case 6:
-          this.audio.src = '../assets/audio/perelive_6.mp3'; // Указываем путь к звуку "клика"
-          break;
-        }
-          
-        this.audio.autoplay = true;
+      this.audio.src = '../assets/audio/perelive_' + this.fr.speed + '.mp3'; // Указываем путь к звуку "клика"
+        
+      this.audio.autoplay = true;
     }
   }
 

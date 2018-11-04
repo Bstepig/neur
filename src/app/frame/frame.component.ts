@@ -29,6 +29,7 @@ export class FrameComponent implements OnInit {
 
   ngOnInit() {
     this.getFrames();
+    console.log("frames's count are " + this.frames.length);
   }
 
   start(this) {
@@ -49,9 +50,15 @@ export class FrameComponent implements OnInit {
       return;
     }
 
+    console.log("is frame №" + (this.f + 1)) ;
+
     setTimeout( () => {
+      if (this.paused) {
+        // this.f--;
+        console.log("Didn't");
+        return;
+      }
       this.f++;
-      console.log(this.f);
       this.cycle();
     }, this.deltaSpeed / this.speed);
   }
@@ -62,15 +69,8 @@ export class FrameComponent implements OnInit {
   }
 
   getFrames() {
-    var temp = this.frameService.getFrames();
-    var rtn = [];
-    for (let i = 0; i < temp.length; i++){
-      if (temp[i].exercise == this.bodyCode){
-        rtn.push(temp[i]);
-      }
-    }
-    this.frames = rtn;
-    console.log(this.frames);
+    let temp = this.frameService.getFrames();
+    this.frames = temp.filter(word => word.exercise === this.bodyCode);
   }
 
 }
