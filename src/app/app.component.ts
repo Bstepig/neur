@@ -21,16 +21,18 @@ export class AppComponent {
 
   start() {
     if (this.started) {
-      if (this.timer){
+      if (this.timer)
         clearTimeout(this.timer);
-      }
+
       this.started = false;
       this.fr.pause();
       this.audio.pause();
     }
     else {
+      if (this.timer)
+        clearTimeout(this.timer);
+
       this.started = true;
-      console.log('unpause');
       this.fr.start();
       this.timer = setTimeout( () => {
         this.started = false;
@@ -46,28 +48,24 @@ export class AppComponent {
   }
 
   incSpeed() {
-    if (this.fr.speed < 6) {
+    if (this.fr.speed < 6)
         this.fr.speed++;
-    }
   }
 
   decSpeed() {
-    if (this.fr.speed > 1) {
+    if (this.fr.speed > 1)
         this.fr.speed--;
-    }
   }
 
   incBodyCode() {
-    if (this.fr.bodyCode < 6) {
+    if (this.fr.bodyCode < 6)
         this.fr.bodyCode++;
-    }
     this.changeBodyCode()
   }
 
   decBodyCode() {
-    if (this.fr.bodyCode > 1) {
+    if (this.fr.bodyCode > 1)
         this.fr.bodyCode--;
-    }
     this.changeBodyCode()
   }
   

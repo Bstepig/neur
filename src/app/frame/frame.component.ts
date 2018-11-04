@@ -34,6 +34,7 @@ export class FrameComponent implements OnInit {
   }
 
   start(this) {
+    console.log('start');
     if (this.f >= this.frames.length - 1) {
       this.f = 0;
     }
