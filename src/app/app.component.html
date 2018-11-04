@@ -27,9 +27,13 @@
 
              <li class="nav-item  mr-5">
                 <a tabindex="-1" (click)="start()" class="nav-link button_start btn-lg btn btn-outline-success">
-                    <i class="fa fa-lg p-2"
-                    [class.fa-play]="started"
-                    [class.fa-stop]="!started"></i></a>
+                    <span [style.display]="started?'block':'none'">
+                        <i class="fa fa-lg p-2 fa-play"></i>
+                    </span>
+                    <span [style.display]="!started?'block':'none'">
+                        <i class="fa fa-lg p-2 fa-stop"></i>
+                    </span>
+                </a>
             </li>
 
             <li class="nav-item ">
