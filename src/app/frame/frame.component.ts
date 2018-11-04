@@ -17,6 +17,7 @@ export class FrameComponent implements OnInit {
   bodyCode:number = 1;
 
   paused:boolean = true;
+  cycleTimer;
 
   @Input() isStarted:boolean;
 
@@ -42,6 +43,7 @@ export class FrameComponent implements OnInit {
 
   cycle() {
     if (this.paused) {
+      console.log("!Didn't before");
       this.f--;
       return;
     }
@@ -52,20 +54,22 @@ export class FrameComponent implements OnInit {
 
     console.log("is frame №" + (this.f + 1)) ;
 
-    setTimeout( () => {
+    this.cycleTimer = setTimeout( () => {
       if (this.paused) {
         // this.f--;
-        console.log("Didn't");
+        console.log("!Didn't");
         return;
       }
       this.f++;
       this.cycle();
+      console.log("!Did");
     }, this.deltaSpeed / this.speed);
   }
 
   pause() {
     console.log('paused');
     this.paused = true;
+    clearInterval(this.cycleTimer);
   }
 
   getFrames() {
