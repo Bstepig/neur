@@ -8,40 +8,28 @@ import { FramesService } from '../frames.service';
   styleUrls: ['./frame.component.scss']
 })
 export class FrameComponent implements OnInit {
-
-  @Input() isStarted:boolean;
-
-  constructor(private frameService: FramesService) { }
-
-  f = 0;
+  
+  f:number = 0;
   frames: Frame[];
 
-  ngOnInit() {
-    this.getFrames();
-  }
+  speed:number = 1;
+  deltaSpeed:number = 3000;
+  bodyCode:number = 1;
+
+  paused:boolean = true;
+
+  @Input() isStarted:boolean;
 
   if (isStarted) {
     console.log('started!');
     this.start();
   }
 
-  getFrames() {
-    var temp = this.frameService.getFrames();
-    var rtn = [];
-    for (let i = 0; i < temp.length; i++){
-      if (temp[i].exercise == this.body_code){
-        rtn.push(temp[i]);
-      }
-    }
-    this.frames = rtn;
-    console.log(this.frames);
+  constructor(private frameService: FramesService) { }
+
+  ngOnInit() {
+    this.getFrames();
   }
-
-  speed:number = 1;
-  body_code:number = 1;
-
-  th = this;
-  paused:boolean = true;
 
   start(this) {
     if (this.f >= this.frames.length - 1) {
@@ -52,26 +40,37 @@ export class FrameComponent implements OnInit {
   }
 
   cycle() {
-    var th = this;
-    if (th.paused) {
-      th.f--;
+    if (this.paused) {
+      this.f--;
       return;
     }
 
-    if (th.f >= th.frames.length - 1) {
+    if (this.f >= this.frames.length - 1) {
       return;
     }
 
-    setTimeout(function() {
-      th.f++;
-      console.log(th.f);
-      th.cycle();
-    }, 1000 / th.speed);
+    setTimeout( () => {
+      this.f++;
+      console.log(this.f);
+      this.cycle();
+    }, this.deltaSpeed / this.speed);
   }
 
   pause() {
     console.log('paused');
     this.paused = true;
+  }
+
+  getFrames() {
+    var temp = this.frameService.getFrames();
+    var rtn = [];
+    for (let i = 0; i < temp.length; i++){
+      if (temp[i].exercise == this.bodyCode){
+        rtn.push(temp[i]);
+      }
+    }
+    this.frames = rtn;
+    console.log(this.frames);
   }
 
 }
