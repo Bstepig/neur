@@ -1,5 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FrameComponent } from './frame/frame.component';
+import { MusicService } from './music.service';
+import { FramesService } from './frames.service';
 
 @Component({
   selector: 'app-root',
@@ -13,11 +15,24 @@ export class AppComponent {
   timer;
   audio = new Audio();
 
+  mucisNames:string[] = this.musicService.getNames();
+  selectMusic:string = this.mucisNames[0];
+  
+  exerciseNames:string[] = ['Случайно'].concat(this.framesService.getTemplateNames());
+  selectExercise:string = this.exerciseNames[0];
+
+  difficults:string[] = ["легко", "сложно"];
+  difficult:string = this.difficults[0];
 
   @ViewChild(FrameComponent)
   public fr: FrameComponent;
 
-  ngOnInit() { }
+  constructor (
+    private musicService: MusicService,
+    private framesService: FramesService
+    ) { }
+
+  ngOnInit() { this.getFrames() }
 
   start() {
     if (this.started) {
@@ -41,7 +56,7 @@ export class AppComponent {
         this.audio.currentTime = 0.0;
       }, (this.fr.frames.length - this.fr.f) * this.fr.deltaSpeed / this.fr.speed)
 
-      this.audio.src = '../assets/audio/perelive_' + this.fr.speed + '.mp3'; // Указываем путь к звуку "клика"
+      this.audio.src = this.musicService.getMusic(this.fr.speed - 1, this.selectMusic); // Указываем путь к звуку "клика"
         
       this.audio.autoplay = true;
     }
@@ -75,7 +90,7 @@ export class AppComponent {
       this.started = false;
       this.fr.pause();
     }
-    this.fr.getFrames();
+    this.getFrames();
     this.fr.pause();
     this.fr.f = 0;
     this.audio.pause();
@@ -84,6 +99,27 @@ export class AppComponent {
 
   changeBg() {
     this.bgSrc = "/assets/img/backgrounds/bg_" + randomInteger(1, 6) + ".jpg";
+  }
+
+  changeMusic($event) {
+    this.selectMusic = $event.target.value;
+  }
+
+  getFrames() {
+    if (this.selectExercise === 'Случайно')
+      this.fr.getRandomFrames(this.difficult);
+    else
+      this.fr.getFramesTemplate(this.selectExercise);
+  }
+
+  changeExercise($event) {
+    this.selectExercise = $event.target.value;
+    this.getFrames();
+  }
+
+  changeDifficult($event) {
+    this.difficult = $event.target.value;
+    this.getFrames();
   }
 
 }

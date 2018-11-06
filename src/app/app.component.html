@@ -10,6 +10,25 @@
                     <input type="hidden" name="csrfmiddlewaretoken" value="5egE95OCEseZIjWnIYULsnxvjd1rkwDu8VC11vuUAjoE9XZRkCBLvxQcppfz5BIw">
                     <input type="hidden" id="check_url" value="/csrf_check">
                 </span>
+<select name="" id="" (click)="changeMusic($event)">
+    <option *ngFor="let mus of mucisNames">
+        {{mus}}
+    </option>
+</select>
+
+<select name="" id="" (click)="changeExercise($event)">
+    <option *ngFor="let exer of exerciseNames">
+        {{exer}}
+    </option>
+</select>
+<label for=""> Сложность 
+<select *ngIf="selectExercise === exerciseNames[0]" name="" id="" (click)="changeDifficult($event)">
+    <option *ngFor="let dif of difficults">
+        {{dif}}
+    </option>
+</select>
+<span *ngIf="selectExercise !== exerciseNames[0]">{{ fr.getTemplateDifficult(this.selectExercise) }}</span>
+</label>
 
     <div class="collapse navbar-collapse" id="navbarColor03">
         <ul class="navbar-nav mr-auto">

@@ -28,10 +28,7 @@ export class FrameComponent implements OnInit {
 
   constructor(private frameService: FramesService) { }
 
-  ngOnInit() {
-    this.getFrames();
-    console.log("frames's count are " + this.frames.length);
-  }
+  ngOnInit() { }
 
   start(this) {
     console.log('start');
@@ -73,9 +70,16 @@ export class FrameComponent implements OnInit {
     clearInterval(this.cycleTimer);
   }
 
-  getFrames() {
-    let temp = this.frameService.getFrames();
-    this.frames = temp.filter(word => word.exercise === this.bodyCode);
+  getRandomFrames(difficult): void {
+    this.frames = this.frameService.getRandomFrames(difficult);
+  }
+
+  getFramesTemplate(name: string): void {
+    this.frames = this.frameService.getFramesTemplate(name);
+  }
+
+  getTemplateDifficult(name: string): string {
+    return this.frameService.getTemplateDifficult(name);
   }
 
 }

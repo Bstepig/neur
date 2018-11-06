@@ -1,4 +1,4 @@
 export class Frame {
   path: string;
-  exercise: number;
+  difficult: string;
 }
