@@ -47,6 +47,7 @@ export class AppComponent {
       if (this.timer)
         clearTimeout(this.timer);
 
+      
       this.started = true;
       this.fr.start();
       this.timer = setTimeout( () => {
@@ -57,7 +58,7 @@ export class AppComponent {
       }, (this.fr.frames.length - this.fr.f) * this.fr.deltaSpeed / this.fr.speed)
 
       this.audio.src = this.musicService.getMusic(this.fr.speed - 1, this.selectMusic); // Указываем путь к звуку "клика"
-        
+      this.audio.currentTime = this.fr.f * this.fr.deltaSpeed / this.fr.speed / 1000;
       this.audio.autoplay = true;
     }
   }
@@ -72,37 +73,13 @@ export class AppComponent {
         this.fr.speed--;
   }
 
-  incBodyCode() {
-    if (this.fr.bodyCode < 6)
-        this.fr.bodyCode++;
-    this.changeBodyCode()
-  }
-
-  decBodyCode() {
-    if (this.fr.bodyCode > 1)
-        this.fr.bodyCode--;
-    this.changeBodyCode()
-  }
-  
-  changeBodyCode() {
-    if (this.timer) {
-      clearTimeout(this.timer);
-      this.started = false;
-      this.fr.pause();
-    }
-    this.getFrames();
-    this.fr.pause();
-    this.fr.f = 0;
-    this.audio.pause();
-    this.audio.currentTime = 0.0;
-  }
-
   changeBg() {
     this.bgSrc = "/assets/img/backgrounds/bg_" + randomInteger(1, 6) + ".jpg";
   }
 
   changeMusic($event) {
     this.selectMusic = $event.target.value;
+    this.audio.src = this.musicService.getMusic(this.fr.speed - 1, this.selectMusic); // Указываем путь к звуку "клика"
   }
 
   getFrames() {
@@ -121,6 +98,31 @@ export class AppComponent {
     this.difficult = $event.target.value;
     this.getFrames();
   }
+
+  // incBodyCode() {
+  //   if (this.fr.bodyCode < 6)
+  //       this.fr.bodyCode++;
+  //   this.changeBodyCode()
+  // }
+
+  // decBodyCode() {
+  //   if (this.fr.bodyCode > 1)
+  //       this.fr.bodyCode--;
+  //   this.changeBodyCode()
+  // }
+  
+  // changeBodyCode() {
+  //   if (this.timer) {
+  //     clearTimeout(this.timer);
+  //     this.started = false;
+  //     this.fr.pause();
+  //   }
+  //   this.getFrames();
+  //   this.fr.pause();
+  //   this.fr.f = 0;
+  //   this.audio.pause();
+  //   this.audio.currentTime = 0.0;
+  // }
 
 }
 

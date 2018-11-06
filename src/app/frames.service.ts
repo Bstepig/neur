@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Frame } from './frame';
 import { FRAMES } from './group-frames';
 import { TEMPLATES } from './group-frames';
-import { FramesTemplate } from './framesTemplate';
 
 @Injectable({
   providedIn: 'root'
